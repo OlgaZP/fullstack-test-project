@@ -1,4 +1,4 @@
-GET http://127.0.0.1:5000/api/users HTTP/1.1
+GET http://127.0.0.1:5000/api/users?page=2&results=3  HTTP/1.1
 
 ###
 GET http://127.0.0.1:5000/api/users/1 HTTP/1.1
@@ -11,11 +11,11 @@ POST http://127.0.0.1:5000/api/users HTTP/1.1
 Content-Type: application/json
 
 {
-    "firstName": "Userthree",
+    "firstName": "Usersixth",
     "lastName": "Lastname",
-    "email": "user3@gmail.com",
+    "email": "user6@gmail.com",
     "passwordHash": "1qazxsw2",
-    "birthday": "2000-03-23"
+    "birthday": "2000-03-25"
 }
 
 ###

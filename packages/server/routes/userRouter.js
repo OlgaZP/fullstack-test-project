@@ -1,13 +1,13 @@
 const { Router } = require('express');
 const { userController } = require('../controllers');
-const { upload } = require('../middleware');
+const { upload, paginate } = require('../middleware');
 
 const userRouter = Router();
 
 // route begin from /api/users
 userRouter
   .route('/')
-  .get(userController.getUsers)
+  .get(paginate.paginateUsers, userController.getUsers)
   .post(userController.createUser);
 
 //refactoring... use userRouter.rout instead 4 different strings

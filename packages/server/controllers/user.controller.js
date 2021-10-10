@@ -3,13 +3,17 @@ const createError = require('http-errors');
 const { User } = require('./../models');
 
 module.exports.getUsers = async (req, res, next) => {
+  const {
+    pagination: { limit, offset }
+  } = req;
   try {
     const foundUsers = await User.findAll({
       raw: true,
       attributes: {
         exclude: ['id', 'passwordHash', 'createdAt', 'updatedAt']
       },
-      limit: 5
+      limit,
+      offset
     });
 
     res.status(200).send({ data: foundUsers });

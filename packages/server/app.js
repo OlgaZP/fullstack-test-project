@@ -1,8 +1,12 @@
 const express = require('express');
+const cors = require('cors');
 const { errorHandlers } = require('./middleware');
 const router = require('./router');
 
 const app = express();
+
+//add from requests
+app.use(cors({ origin: 'http://localhost' }));
 
 app.use(express.json());
 
