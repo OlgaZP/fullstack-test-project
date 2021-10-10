@@ -12,7 +12,7 @@ module.exports.getUsers = async (req, res, next) => {
       limit: 5
     });
 
-    res.status(200).send(foundUsers);
+    res.status(200).send({ data: foundUsers });
   } catch (e) {
     next(e);
   }
@@ -32,7 +32,7 @@ module.exports.getUserById = async (req, res) => {
       }
     });
     if (foundUser) {
-      return res.status(200).send(foundUser);
+      return res.status(200).send({ data: foundUser });
     }
     // res.status(404).send('User not found');
     next(createError(404, 'User not found'));
@@ -54,7 +54,7 @@ module.exports.createUser = async (req, res, next) => {
       'updatedAt'
     ]);
 
-    res.status(200).send(preparedUser);
+    res.status(201).send({ data: preparedUser });
   } catch (e) {
     next(e);
   }
@@ -85,19 +85,22 @@ module.exports.updateUser = async (req, res, next) => {
     //second method
     const [updatedUserCount, [updatedUser]] = await User.update(body, {
       where: { id: userId },
-      raw: true,
-      attributes: {
-        exclude: ['id', 'passwordHash', 'createdAt', 'updatedAt']
-      },
       returning: true
     });
 
     if (updatedUserCount > 0) {
-      return res.status(200).send(updatedUser);
+      const preparedUser = _.omit(updatedUser.get(), [
+        'id',
+        'createdAt',
+        'updatedAt',
+        'passwordHash'
+      ]);
+      return res.status(200).send({ data: preparedUser });
     }
-    next(createError(404, 'User not found'));
-  } catch (err) {
-    next(err);
+    //res.status(404).send('User Not Found');
+    next(createError(404, 'User Not Found'));
+  } catch (e) {
+    next(e);
   }
 };
 
@@ -140,6 +143,39 @@ module.exports.deleteUser = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.changeImage = async (req, res, next) => {
+  const {
+    params: { userId },
+    file: { filename }
+  } = req;
+
+  try {
+    console.log(`userId`, userId);
+    const [updatedUserCount, [updatedUser]] = await User.update(
+      { image: filename },
+      {
+        where: { id: userId },
+        returning: true
+      }
+    );
+
+    if (updatedUserCount > 0) {
+      const preparedUser = _.omit(updatedUser.get(), [
+        'id',
+        'createdAt',
+        'updatedAt',
+        'passwordHash'
+      ]);
+      return res.status(200).send({ data: preparedUser });
+    }
+
+    next(createError(404, 'User Not Found'));
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports.getUserTasks = async (req, res) => {
   console.log(`getUserTasks from User.controller`);
 };

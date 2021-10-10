@@ -48,6 +48,9 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isBefore: DataTypes.NOW
         }
+      },
+      image: {
+        type: DataTypes.STRING
       }
     },
     {

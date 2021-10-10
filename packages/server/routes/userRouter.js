@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { userController } = require('../controllers');
+const { upload } = require('../middleware');
 
 const userRouter = Router();
 
@@ -20,6 +21,14 @@ userRouter
 // userRouter.patch('/:userId', userController.updateUser);
 // userRouter.put('/:userId', userController.updateUser);
 // userRouter.delete('/:userId', userController.deleteUser);
+
+//add middleware upload
+//path /api/users/:userId/images
+userRouter.patch(
+  '/:userId/images',
+  upload.uploadUserPhoto.single('userPhoto'),
+  userController.changeImage
+);
 
 userRouter.get('/:userId/tasks', userController.getUserTasks);
 
