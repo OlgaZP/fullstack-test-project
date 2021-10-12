@@ -10,7 +10,7 @@ module.exports.getUsers = async (req, res, next) => {
     const foundUsers = await User.findAll({
       raw: true,
       attributes: {
-        exclude: ['id', 'passwordHash', 'createdAt', 'updatedAt']
+        exclude: ['passwordHash', 'createdAt', 'updatedAt']
       },
       limit,
       offset
@@ -22,7 +22,7 @@ module.exports.getUsers = async (req, res, next) => {
   }
 };
 
-module.exports.getUserById = async (req, res) => {
+module.exports.getUserById = async (req, res, next) => {
   const {
     params: { userId }
   } = req;
@@ -52,7 +52,6 @@ module.exports.createUser = async (req, res, next) => {
     const createdUser = await User.create(body);
 
     const preparedUser = _.omit(createdUser.get(), [
-      'id',
       'passwordHash',
       'createdAt',
       'updatedAt'
@@ -94,7 +93,6 @@ module.exports.updateUser = async (req, res, next) => {
 
     if (updatedUserCount > 0) {
       const preparedUser = _.omit(updatedUser.get(), [
-        'id',
         'createdAt',
         'updatedAt',
         'passwordHash'
@@ -166,7 +164,6 @@ module.exports.changeImage = async (req, res, next) => {
 
     if (updatedUserCount > 0) {
       const preparedUser = _.omit(updatedUser.get(), [
-        'id',
         'createdAt',
         'updatedAt',
         'passwordHash'

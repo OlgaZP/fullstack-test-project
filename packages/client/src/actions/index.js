@@ -49,9 +49,9 @@ export const deleteUserRequest = () => ({
   type: ACTION_TYPES.DELETE_USER_REQUEST
 });
 
-export const deleteUserSuccess = deletedUser => ({
+export const deleteUserSuccess = id => ({
   type: ACTION_TYPES.DELETE_USER_SUCCESS,
-  deletedUser
+  id
 });
 
 export const deleteUserError = error => ({

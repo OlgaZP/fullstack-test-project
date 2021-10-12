@@ -6,7 +6,7 @@ const router = require('./router');
 const app = express();
 
 //add from requests
-app.use(cors({ origin: 'http://localhost' }));
+app.use(cors({ origin: 'http://localhost:3000' }));
 
 app.use(express.json());
 

@@ -11,18 +11,14 @@ function UsersSagaList (props) {
     getUsers();
   }, [users.length]);
 
-  const mapUser = ({ firstName, lastName, email }) => {
-    // const changeBann = () => {
-    //   updateUserAction({ id: id, isBanned: !isBanned })
-    // }
-
+  const mapUser = ({ id, firstName, lastName, email }) => {
     const deleteHandler = () => {
-      deleteUser(email);
+      deleteUser(id);
     };
 
     return (
-      <li key={email}>
-        firstNAme: {firstName} lastName: {lastName} email: {email}
+      <li key={id}>
+        firstName: {firstName} lastName: {lastName} email: {email}
         <button onClick={deleteHandler}>Delete</button>
       </li>
     );

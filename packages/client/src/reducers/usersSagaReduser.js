@@ -3,7 +3,7 @@ import ACTION_TYPES from '../actions/actionTypes';
 const initialState = {
   users: [],
   isFetching: false,
-  error: null,
+  error: null
 };
 
 function usersSagaReducer (state = initialState, action) {
@@ -14,7 +14,7 @@ function usersSagaReducer (state = initialState, action) {
       return {
         ...state,
         isFetching: true,
-        error: null,
+        error: null
       };
     }
     case ACTION_TYPES.GET_USERS_SUCCESS: {
@@ -22,7 +22,7 @@ function usersSagaReducer (state = initialState, action) {
       return {
         ...state,
         isFetching: false,
-        users,
+        users
       };
     }
     case ACTION_TYPES.GET_USERS_ERROR: {
@@ -30,7 +30,7 @@ function usersSagaReducer (state = initialState, action) {
       return {
         ...state,
         isFetching: false,
-        error,
+        error
       };
     }
     //CREATE
@@ -38,7 +38,7 @@ function usersSagaReducer (state = initialState, action) {
       return {
         ...state,
         isFetching: true,
-        error: null,
+        error: null
       };
     }
     case ACTION_TYPES.CREATE_USER_SUCCESS: {
@@ -51,7 +51,7 @@ function usersSagaReducer (state = initialState, action) {
       return {
         ...state,
         users: newUsers,
-        isFetching: false,
+        isFetching: false
       };
     }
     case ACTION_TYPES.CREATE_USER_ERROR: {
@@ -59,7 +59,7 @@ function usersSagaReducer (state = initialState, action) {
       return {
         ...state,
         isFetching: false,
-        error,
+        error
       };
     }
     //DELETE
@@ -67,21 +67,21 @@ function usersSagaReducer (state = initialState, action) {
       return {
         ...state,
         isFetching: true,
-        error: null,
+        error: null
       };
     }
     case ACTION_TYPES.DELETE_USER_SUCCESS: {
-      const { deletedUser } = action;
+      const { id } = action;
       const { users } = state;
       const newUsers = [...users];
       newUsers.splice(
-        newUsers.findIndex(u => u.id === deletedUser.id),
+        newUsers.findIndex(u => u.id === id),
         1
       );
       return {
         ...state,
         isFetching: false,
-        users: newUsers,
+        users: newUsers
       };
     }
     case ACTION_TYPES.DELETE_USER_ERROR: {
@@ -89,7 +89,7 @@ function usersSagaReducer (state = initialState, action) {
       return {
         ...state,
         isFetching: false,
-        error,
+        error
       };
     }
     default:
